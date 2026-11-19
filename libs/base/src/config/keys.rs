@@ -66,6 +66,15 @@ pub const OPTION_HIDE_RECORDING_BUTTON: &str = "hide-recording-button";
 pub const OPTION_WINDOWS_SERVICE_VIDEO_SAVE_DIRECTORY: &str =
     "windows-service-video-save-directory";
 pub const OPTION_VIDEO_SAVE_DIRECTORY: &str = "video-save-directory";
+pub const OPTION_ALLOW_RECORDING_UPLOAD: &str = "allow-recording-upload";
+pub const OPTION_RECORDING_UPLOAD_ENDPOINT: &str = "recording-upload-endpoint";
+pub const OPTION_RECORDING_UPLOAD_REGION: &str = "recording-upload-region";
+pub const OPTION_RECORDING_UPLOAD_BUCKET: &str = "recording-upload-bucket";
+pub const OPTION_RECORDING_UPLOAD_PREFIX: &str = "recording-upload-prefix";
+pub const OPTION_RECORDING_UPLOAD_ACCESS_KEY: &str = "recording-upload-access-key";
+pub const OPTION_RECORDING_UPLOAD_SECRET_KEY: &str = "recording-upload-secret-key";
+pub const OPTION_RECORDING_UPLOAD_PATH_STYLE: &str = "recording-upload-path-style";
+pub const OPTION_RECORDING_UPLOAD_DELETE_LOCAL: &str = "recording-upload-delete-local";
 pub const OPTION_ENABLE_ABR: &str = "enable-abr";
 pub const OPTION_ALLOW_REMOVE_WALLPAPER: &str = "allow-remove-wallpaper";
 pub const OPTION_ALLOW_ALWAYS_SOFTWARE_RENDER: &str = "allow-always-software-render";
@@ -259,6 +268,15 @@ pub const KEYS_LOCAL_SETTINGS: &[&str] = &[
     OPTION_ALLOW_AUTO_RECORD_OUTGOING,
     OPTION_HIDE_RECORDING_BUTTON,
     OPTION_VIDEO_SAVE_DIRECTORY,
+    OPTION_ALLOW_RECORDING_UPLOAD,
+    OPTION_RECORDING_UPLOAD_ENDPOINT,
+    OPTION_RECORDING_UPLOAD_REGION,
+    OPTION_RECORDING_UPLOAD_BUCKET,
+    OPTION_RECORDING_UPLOAD_PREFIX,
+    OPTION_RECORDING_UPLOAD_ACCESS_KEY,
+    OPTION_RECORDING_UPLOAD_SECRET_KEY,
+    OPTION_RECORDING_UPLOAD_PATH_STYLE,
+    OPTION_RECORDING_UPLOAD_DELETE_LOCAL,
     OPTION_ENABLE_TCP_PUNCH,
     OPTION_ENABLE_UDP_PUNCH,
     OPTION_ENABLE_IPV6_PUNCH,

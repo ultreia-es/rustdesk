@@ -7100,6 +7100,7 @@ dependencies = [
  "gtk",
  "hbb_common",
  "hex",
+ "hmac",
  "hound",
  "image 0.24.9",
  "impersonate_system",
