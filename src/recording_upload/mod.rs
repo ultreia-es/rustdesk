@@ -239,7 +239,16 @@ fn upload_file(
     let key = key::object_key(prefix, local_id, filename)
         .ok_or_else(|| anyhow!("cannot build object key"))?;
     let size = std::fs::metadata(path)?.len();
-    let sha256 = file_sha256(path)?;
+    // Hash the bytes actually sent, so the recorded digest always matches the object.
+    let body = if size <= SINGLE_PUT_MAX {
+        Some(std::fs::read(path)?)
+    } else {
+        None
+    };
+    let sha256 = match &body {
+        Some(body) => sigv4::sha256_hex(body),
+        None => file_sha256(path)?,
+    };
     let meta = [
         ("x-amz-meta-sha256", sha256.as_str()),
         ("x-amz-meta-direction", name.direction),
@@ -247,15 +256,16 @@ fn upload_file(
         ("x-amz-meta-local-id", local_id),
         ("x-amz-meta-client-version", crate::VERSION),
     ];
-    let etag = if size <= SINGLE_PUT_MAX {
-        let mut headers = meta.to_vec();
-        headers.push(("if-none-match", "*"));
-        // A failed precondition means an earlier attempt stored this key but
-        // its marker was not written.
-        s3::put_object(client, target, &key, &headers, std::fs::read(path)?)?
-            .unwrap_or_else(|| "existing".to_owned())
-    } else {
-        upload_multipart(client, target, &key, &meta, path)?
+    let etag = match body {
+        Some(body) => {
+            let mut headers = meta.to_vec();
+            headers.push(("if-none-match", "*"));
+            // A failed precondition means an earlier attempt stored this key but
+            // its marker was not written.
+            s3::put_object(client, target, &key, &headers, body)?
+                .unwrap_or_else(|| "existing".to_owned())
+        }
+        None => upload_multipart(client, target, &key, &meta, path)?,
     };
     if delete_local {
         std::fs::remove_file(path)?;
